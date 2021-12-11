@@ -49,6 +49,14 @@ const cursorsByCategory = [
     cursors: ['zoom-in', 'zoom-out'],
   },
 ]
+
+function copyCursorCSS(cursor) {
+  const copiedString = `cursor: ${cursor};`
+  console.log('Copying to clipboard', copiedString)
+  navigator.clipboard.writeText(copiedString).then(() => {
+    console.log("Copied string !", copiedString)
+  })
+}
 </script>
 
 <template>
@@ -62,9 +70,15 @@ const cursorsByCategory = [
     >
       <h2>{{ category.category }}</h2>
       <ul class="cursor-list">
-        <li v-for="cursor in category.cursors" :key="cursor" class="cursor-item" :style="{
-          '--cursor-property': cursor
-        }">
+        <li
+          v-for="cursor in category.cursors"
+          :key="cursor"
+          class="cursor-item"
+          :style="{
+            '--cursor-property': cursor,
+          }"
+          @click="copyCursorCSS(cursor)"
+        >
           {{ cursor }}
         </li>
       </ul>
@@ -85,13 +99,13 @@ const cursorsByCategory = [
 
 .cursor-item {
   border: 1px solid #0004;
-  
+
   width: 8rem;
   height: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  cursor: var(--cursor-property)
+  cursor: var(--cursor-property);
 }
 </style>
